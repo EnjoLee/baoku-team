@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baoku.team.dao.IBaokuTeamDao" >
+  <resultMap id="BaseResultMap" type="com.baoku.team.pojo.BaokuTeamUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="ZHIWEI" property="zhiWei" jdbcType="VARCHAR" />
+    <result column="BUMEN" property="buMen" jdbcType="VARCHAR" />
+    <result column="FUZEREN" property="fuZeRen" jdbcType="VARCHAR" />
+    <result column="TOUXIANG" property="touXiang" jdbcType="VARCHAR" />
+    <result column="DATE" property="date" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="oldCompany" property="oldCompany" jdbcType="VARCHAR" />
+    <result column="oldZhiWei" property="oldZhiWei" jdbcType="VARCHAR" />
+    <result column="doWhat" property="doWhat" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="zhuanYe" property="zhuanYe" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_NAME,USER_SEX,ZHIWEI,BUMEN,FUZEREN,TOUXIANG,DATE,email,oldCompany,oldZhiWei,doWhat,school,zhuanYe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from USER_XINXI
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from USER_XINXI
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baoku.team.pojo.BaokuTeamUser" >
+    insert into USER_XINXI(ID, USER_NAME,USER_SEX,ZHIWEI,BUMEN,FUZEREN,TOUXIANG,DATE,email,oldCompany,oldZhiWei,doWhat,school,zhuanYe)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{zhiWei,jdbcType=VARCHAR}, #{buMen,jdbcType=VARCHAR},#{fuZeRen,jdbcType=VARCHAR},#{touXiang,jdbcType=VARCHAR},#{date,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{oldCompany,jdbcType=VARCHAR},#{oldZhiWei,jdbcType=VARCHAR},#{doWhat,jdbcType=VARCHAR},#{school,jdbcType=VARCHAR},#{zhuanYe,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baoku.team.pojo.BaokuTeamUser" >
+    update USER_XINXI
+    <set >
+      <if test="userName != null" >
+          user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+		  USER_SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="zhiWei != null" >
+          zhiWei = #{zhiWei,jdbcType=VARCHAR},
+      </if>
+      <if test="buMen != null" >
+          buMen = #{buMen,jdbcType=VARCHAR},
+      </if>
+      <if test="fuZeRen != null" >
+          fuZeRen = #{fuZeRen,jdbcType=VARCHAR},
+      </if>
+      <if test="touXiang != null" >
+          touXiang = #{touXiang,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+          date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+          email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCompany != null" >
+          oldCompany = #{oldCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="oldZhiWei != null" >
+          oldZhiWei = #{oldZhiWei,jdbcType=VARCHAR},
+      </if>
+      <if test="doWhat != null" >
+          doWhat = #{doWhat,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+          school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuanYe != null" >
+          zhuanYe = #{zhuanYe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baoku.team.pojo.BaokuTeamUser" >
+    update USER_XINXI
+    set user_name = #{userName,jdbcType=VARCHAR},
+      USER_SEX = #{sex,jdbcType=VARCHAR},
+      zhiWei = #{zhiWei,jdbcType=VARCHAR},
+      buMen = #{buMen,jdbcType=VARCHAR},
+      fuZeRen = #{fuZeRen,jdbcType=VARCHAR},
+      touXiang = #{touXiang,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      oldCompany = #{oldCompany,jdbcType=VARCHAR},
+      oldZhiWei = #{oldZhiWei,jdbcType=VARCHAR},
+      doWhat = #{doWhat,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      zhuanYe = #{zhuanYe,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from USER_XINXI where 1=1
+  </select>
+  
+  <select id="findByDate" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select <include refid="Base_Column_List" /> from USER_XINXI where date = #{date,jdbcType=VARCHAR}
+  </select>
+</mapper>

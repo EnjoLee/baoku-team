@@ -1,0 +1,5 @@
+com\baoku\team\service\impl\BaokuTeamServiceImpl.class
+com\baoku\team\pojo\BaokuTeamUser.class
+com\baoku\team\service\IBaokuTeamService.class
+com\baoku\team\controller\BaokuTeamController.class
+com\baoku\team\dao\IBaokuTeamDao.class
