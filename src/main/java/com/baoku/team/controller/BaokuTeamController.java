@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,10 +62,12 @@ public class BaokuTeamController extends HttpServlet {
 			logger.error(e);
 			e.printStackTrace();
 		}
-		return Teamlist(request, map);
+		return teamList();
 	}
 
-	private ModelAndView Teamlist(HttpServletRequest request, ModelMap map) {
+	@RequestMapping(value = "/teamList.do")
+	private ModelAndView teamList() {
+		Map<String, Object> map = new HashMap<String, Object>();
 		List<BaokuTeamUser> list = new ArrayList<BaokuTeamUser>();
 		try {
 			Date nowDate = new Date();

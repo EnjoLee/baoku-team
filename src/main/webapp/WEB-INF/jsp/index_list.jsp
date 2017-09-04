@@ -43,11 +43,52 @@ html, body, table, td {
 		<tr>
 			<td style="padding: 20px 10px 10px 10px; color: #1575ed; line-height: 24px; text-indent: 2em;">
 			    <h3 class="lin_h_36">Hi All，</h3>
-			    <p class="lin_h_36 p_l_40">诚挚欢迎&nbsp;<c:forEach items="${listt }" var="list" varStatus="status">${list.userName }</c:forEach>&nbsp;加入宝库大家庭。</p>
+			    <p class="lin_h_36 p_l_40">诚挚欢迎
+			    <c:forEach items="${listt }" var="list" varStatus="status">
+			    <c:choose>
+               		<c:when test="${not empty listt && status.index==0 }">
+               			${list.userName }
+               		</c:when>
+               		<c:otherwise>
+               			，${list.userName }
+               		</c:otherwise>
+               	</c:choose>
+			    </c:forEach>加入宝库大家庭。</p>
 				<c:forEach items="${listt }" var="list" varStatus="status">
-				<p class="lin_h_36 p_l_40">${list.userName }毕业于${list.school }${list.zhuanYe }专业，曾在${list.oldCompany }等公司担任&nbsp;${list.oldZhiWei }&nbsp;一职。加入宝库后，将担任&nbsp;${list.zhiWei }&nbsp;一职，负责${list.doWhat }方面的工作。邮箱如下：${list.email }</p>
+			    <c:if test="${not empty list}">
+				<p class="lin_h_36 p_l_40">${list.userName }
+				<c:if test="${not empty list.school }">
+					<c:if test="${not empty list.zhuanYe}">
+					毕业于${list.school }
+					</c:if>
+					<c:if test="${empty list.zhuanYe}">
+					毕业于${list.school }，
+					</c:if>
+				</c:if>
+				<c:if test="${not empty list.zhuanYe }">--${list.zhuanYe }专业，</c:if>
+          		<c:if test="${not empty list.oldCompany}">
+	          		<c:if test="${not empty list.oldZhiWei}">
+	          			曾在${list.oldCompany }等公司
+	          		</c:if>
+	          		<c:if test="${empty list.oldZhiWei}" >
+	          			曾在${list.oldCompany }等公司就职。
+	          		</c:if>
+          		</c:if>
+               	<c:if test="${not empty list.oldZhiWei }">担任&nbsp;${list.oldZhiWei }&nbsp;一职。</c:if>
+				加入宝库后，将担任&nbsp;${list.zhiWei }&nbsp;一职，<c:if test="${not empty list.doWhat }">负责${list.doWhat }。</c:if>邮箱如下：${list.email }</p>
+				</c:if>
 				</c:forEach>
-				<p class="lin_h_36 p_l_40">祝<c:forEach items="${listt }" var="list" varStatus="status">${list.userName }</c:forEach>在宝库工作及生活愉快！</p>
+				<p class="lin_h_36 p_l_40">祝
+				<c:forEach items="${listt }" var="list" varStatus="status">
+			    <c:choose>
+               		<c:when test="${not empty listt && status.index==0 }">
+               			${list.userName }
+               		</c:when>
+               		<c:otherwise>
+               			，${list.userName }
+               		</c:otherwise>
+               	</c:choose>
+			    </c:forEach>在宝库工作及生活愉快！</p>
 				<%-- <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎<c:forEach items="${listt }" var="list" varStatus="status"><c:if test="${!status.last}">${list.buMen }${list.zhiWei }${list.userName }，</c:if><c:if test="${status.last }">${list.buMen }${list.zhiWei }${list.userName }</c:if><input type="hidden" class="sex" value="${list.sex}"></c:forEach>加入宝库在线，希望大家给予新同事热情的欢迎和积极的帮助，让<span id="number">他</span>感受到宝库的文化氛围，尽快融入到我们这个大家庭。
 				<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;再次欢迎<c:choose><c:when test="${fn:length(listt)>1 }">你们</c:when><c:otherwise>你</c:otherwise></c:choose>的加盟，选择与宝库并肩作战！</p> --%>
 			</td>
