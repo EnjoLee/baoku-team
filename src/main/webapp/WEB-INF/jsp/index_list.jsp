@@ -34,7 +34,6 @@ html, body, table, td {
 .p_l_40{padding-left:40px}
 </style>
 </head>
-
 <body style="font-size: 18px; font-family: Microsoft YaHei; color: #1575ed;">
 	<table width="1200" border="0" align="center" cellpadding="0" cellspacing="0">
 		<tr>
@@ -122,5 +121,6 @@ html, body, table, td {
 			<td height="100"></td>
 		</tr>
 	</table>
+	<input type="hidden" value="上传成功?-${info.code }">
 </body>
 </html>

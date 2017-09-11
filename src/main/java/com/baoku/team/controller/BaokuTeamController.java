@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,28 +41,38 @@ public class BaokuTeamController extends HttpServlet {
 
 	@RequestMapping(value = "/toAdd.do")
 	public ModelAndView toAdd(BaokuTeamUser user,@RequestParam(value = "file", required = false) MultipartFile file,
-			HttpServletRequest request, ModelMap map) {
+			HttpServletRequest request,HttpServletResponse response, ModelMap map) {
 		System.out.println("开始");
-		String path = request.getSession().getServletContext().getRealPath("upload");
-		String fileName = file.getOriginalFilename();
-		// String fileName = new Date().getTime()+".jpg";
-		System.out.println(path);
-		File targetFile = new File(path, fileName);
-		if (!targetFile.exists()) {//
-			targetFile.mkdirs();
-		}
-		Date nowDate = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String saveString = sdf.format(nowDate);
+		//获得物理路径webapp所在路径  
+		String pathRoot = request.getSession().getServletContext().getRealPath("");  
+        String path="";  
 		// 保存
 		try {
-			user.setTouXiang(request.getContextPath() + "/upload/" + fileName);
+			if(!file.isEmpty()){  
+			    //生成uuid作为文件名称  
+				String uuid = UUID.randomUUID().toString().replaceAll("-","");  
+				//获得文件类型（可以判断如果不是图片，禁止上传）  
+				String contentType=file.getContentType();  
+				//获得文件后缀名称  
+				String imageName=contentType.substring(contentType.indexOf("/")+1);  
+				path="/static/images/"+uuid+"."+imageName;  
+				File targetFile = new File(pathRoot+path);
+				if (!targetFile.exists()) {//
+					targetFile.mkdirs();
+				}
+				file.transferTo(targetFile);  
+				logger.info(path); 
+			}
+			user.setTouXiang(request.getContextPath()+path);
+			Date nowDate = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String saveString = sdf.format(nowDate);
 			user.setDate(saveString);
 			baokuTeamService.insert(user);
-			file.transferTo(targetFile);//保存位置
 		} catch (Exception e) {
 			logger.error(e);
 			e.printStackTrace();
+			return new ModelAndView("/error/error", map);
 		}
 		return teamList();
 	}
@@ -78,7 +90,7 @@ public class BaokuTeamController extends HttpServlet {
 			e.printStackTrace();
 		}
 		map.put("listt", list);
-		return new ModelAndView("/index_list", map);
+		return new ModelAndView("/jsp/index_list", map);
 	}
 
 }
