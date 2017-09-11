@@ -74,7 +74,7 @@ html, body, table, td {
 	          		</c:if>
           		</c:if>
                	<c:if test="${not empty list.oldZhiWei }">担任&nbsp;${list.oldZhiWei }&nbsp;一职。</c:if>
-				加入宝库后，将担任&nbsp;${list.zhiWei }&nbsp;一职，<c:if test="${not empty list.doWhat }">负责${list.doWhat }。</c:if>邮箱如下：${list.email }</p>
+				加入宝库后，将担任&nbsp;${list.buMen }&nbsp;${list.zhiWei }&nbsp;一职，<c:if test="${not empty list.doWhat }">负责${list.doWhat }。</c:if>邮箱如下：${list.email }</p>
 				</c:if>
 				</c:forEach>
 				<p class="lin_h_36 p_l_40">祝
