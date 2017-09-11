@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.baoku.team.pojo.BaokuTeamUser;
+import com.baoku.team.pojo.BaseBackInfo;
 import com.baoku.team.service.IBaokuTeamService;
 
 @Controller
@@ -42,6 +43,7 @@ public class BaokuTeamController extends HttpServlet {
 	@RequestMapping(value = "/toAdd.do")
 	public ModelAndView toAdd(BaokuTeamUser user,@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest request,HttpServletResponse response, ModelMap map) {
+		BaseBackInfo<String> baseinfo = new BaseBackInfo<String>();
 		System.out.println("开始");
 		//获得物理路径webapp所在路径  
 		String pathRoot = request.getSession().getServletContext().getRealPath("");  
@@ -61,7 +63,9 @@ public class BaokuTeamController extends HttpServlet {
 					targetFile.mkdirs();
 				}
 				file.transferTo(targetFile);  
-				logger.info(path); 
+				logger.info(path);
+				baseinfo.setCode("success");
+				baseinfo.setMessage("上传成功!");
 			}
 			user.setTouXiang(request.getContextPath()+path);
 			Date nowDate = new Date();
@@ -70,6 +74,10 @@ public class BaokuTeamController extends HttpServlet {
 			user.setDate(saveString);
 			baokuTeamService.insert(user);
 		} catch (Exception e) {
+			baseinfo.setCode("error");
+			baseinfo.setMessage("上传失败!");
+			baseinfo.setExtended1(e);
+			map.put("baseinfo", baseinfo);
 			logger.error(e);
 			e.printStackTrace();
 			return new ModelAndView("/error/error", map);
